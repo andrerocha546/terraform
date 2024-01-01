@@ -33,6 +33,6 @@ jobs:
 
     - name: Run Terraform
       run: |
-        cd terraform/s3_bucket
+        cd terraform/aws/s3_bucket
         terraform init
         terraform apply -auto-approve -var="bucket_name=${{ env.BUCKET_NAME }}"

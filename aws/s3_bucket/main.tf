@@ -1,17 +1,22 @@
 resource "aws_s3_bucket" "static_site_bucket" {
     bucket = "static-site-${var.bucket_name}"
-    acl    = "private"
-
-    website {
-        index_document = "index.html"
-        error_document = "error.html"
-    }
 
     tags = {
         Bucket = "Bucket Tag"
         Environment = "Environment Tag"
     }
+}
 
+resource "aws_s3_bucket_website_configuration" "static_site_bucket" {
+    bucket = aws_s3_bucket.static_site_bucket.id
+
+    index_document {
+        suffix = "index.html"
+    }
+
+    error_document {
+        key = "error.html"
+    }
 }
 
 # alterando configurações de bloqueios de acesso publico
@@ -39,7 +44,6 @@ resource "aws_s3_bucket_acl" "static_site_bucket" {
         aws_s3_bucket_ownership_controls.static_site_bucket,
     ]
     bucket = aws_s3_bucket.static_site_bucket.id
-
 
     acl    = "public-read" 
 }

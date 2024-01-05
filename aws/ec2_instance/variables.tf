@@ -4,14 +4,26 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
-variable "ec2_instace_name" {
+variable "instace_name" {
   description = "AWS EC2 Instance Name"
   type        = string
-  default     = "ec2_instace_namea"
+  default     = "instace_name"
 }
 
-variable "aws_ec2_key_name" {
+variable "key_name" {
   description = "AWS EC2 Key Name"
   type        = string
   default     = "ec2"
+}
+
+variable "domain" {
+  description = "Domain Name"
+  type        = string
+  default     = "andrerocha.site"
+}
+
+variable "subdomain" {
+  description = "Sub Domain Name"
+  type        = string
+  default     = "subdomain"
 }

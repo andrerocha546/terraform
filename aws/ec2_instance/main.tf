@@ -24,6 +24,12 @@ resource "aws_instance" "ec2_instace" {
   tags = {
     Name = var.instace_name
   }
+
+  user_data = <<-EOF
+              #!/bin/bash
+              sudo apt update
+              sudo apt install nginx -y
+            EOF
 }
 
 resource "aws_vpc" "ec2_vpc" {
@@ -76,7 +82,7 @@ resource "aws_main_route_table_association" "main_route_table_association" {
 resource "aws_eip" "elastic_ip" {
   instance = aws_instance.ec2_instace.id
   domain   = "vpc"
-  
+
   tags = {
     Name = "elastic_ip"
   }
@@ -159,7 +165,7 @@ resource "aws_security_group" "allow_ssh_http" {
 #   }
 # }
 
-resource "aws_route53_record" "subdomain-ns" {
+resource "aws_route53_record" "subdomain" {
   zone_id = "Z0290689XCPP4TLLJYLQ"
   name    = "${var.subdomain}.${var.domain}"
   type    = "NS"

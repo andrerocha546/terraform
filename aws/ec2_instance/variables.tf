@@ -19,7 +19,7 @@ variable "key_name" {
 variable "domain" {
   description = "Domain Name"
   type        = string
-  default     = "andrerocha.site"
+  default     = "andrerochadev.com.br"
 }
 
 variable "subdomain" {

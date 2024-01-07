@@ -2,6 +2,13 @@ name: 'Terraform'
 
 on:
   workflow_call:
+    inputs:
+      instance_name:
+        required: true
+        type: string
+      subdomain:
+        required: true
+        type: string
   workflow_dispatch:
   issues:
     type:
@@ -37,4 +44,4 @@ jobs:
       run: |
         cd aws/ec2_instance
         terraform init
-        terraform apply -auto-approve
+        terraform apply -auto-approve -var="intance_name=${{ inputs.intance_name }}" -var="subdomain=${{ inputs.subdomain }}" 

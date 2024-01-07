@@ -14,7 +14,7 @@ on:
         required: true
       AWS_REGION:
         required: true
-      AWS_SECRET_ACCESS_KEY:
+      AWS_SECRET_ACCESS_KEY_ID:
         required: true
   workflow_dispatch:
   issues:

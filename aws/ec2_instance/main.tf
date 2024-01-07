@@ -22,7 +22,7 @@ resource "aws_instance" "ec2_instace" {
   depends_on                  = [aws_internet_gateway.gateway]
 
   tags = {
-    Name = var.instace_name
+    Name = var.instance_name
   }
 
   user_data = <<-EOF

@@ -4,10 +4,10 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
-variable "instace_name" {
+variable "instance_name" {
   description = "AWS EC2 Instance Name"
   type        = string
-  default     = "instace_name"
+  default     = "instance_name"
 }
 
 variable "key_name" {

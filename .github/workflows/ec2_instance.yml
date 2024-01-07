@@ -41,14 +41,9 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
         aws-region:  ${{ secrets.AWS_REGION }}
 
-    - name: Extract Bucket Name from Issue
-      run: |
-        export BUCKET_NAME=$(echo "${{ github.event.issue.title }}")
-        echo "Bucket Name: $BUCKET_NAME"
-        echo "BUCKET_NAME=$BUCKET_NAME" >> $GITHUB_ENV
-
     - name: Run Terraform
       run: |
+        ls -la
         cd aws/ec2_instance
         terraform init
         terraform apply -auto-approve -var="intance_name=${{ inputs.intance_name }}" -var="subdomain=${{ inputs.subdomain }}" 

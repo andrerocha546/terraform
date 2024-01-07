@@ -18,8 +18,10 @@ on:
         required: true
   workflow_dispatch:
     inputs:
-      tags:
-        description: 'Test scenario tags'
+      instance_name:
+        required: true
+        type: string
+      subdomain:
         required: true
         type: string
   issues:
@@ -39,16 +41,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    # - name: Setup AWS CLI
-    #   uses: aws-actions/configure-aws-credentials@v2
-    #   with:
-    #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
-    #     aws-region:  ${{ secrets.AWS_REGION }}
+    - name: Setup AWS CLI
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
+        aws-region:  ${{ secrets.AWS_REGION }}
 
     - name: Run Terraform
       run: |
-        echo teste ${{ inputs.tags }}
         cd aws/ec2_instance
         terraform init
         terraform apply -auto-approve -var="intance_name=${{ inputs.intance_name }}" -var="subdomain=${{ inputs.subdomain }}" 

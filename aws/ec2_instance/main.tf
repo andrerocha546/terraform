@@ -137,25 +137,25 @@ resource "aws_security_group" "allow_ssh_http" {
   }
 }
 
-resource "aws_route53domains_registered_domain" "domain" {
-  domain_name = "andrerocha.site."
+# resource "aws_route53domains_registered_domain" "domain" {
+#   domain_name = "andrerocha.site."
 
-  name_server {
-    name = "ns-937.awsdns-53.net"
-  }
+#   name_server {
+#     name = "ns-937.awsdns-53.net"
+#   }
 
-  name_server {
-    name = "ns-1564.awsdns-03.co.uk"
-  }
+#   name_server {
+#     name = "ns-1564.awsdns-03.co.uk"
+#   }
 
-  name_server {
-    name = "ns-505.awsdns-63.com"
-  }
+#   name_server {
+#     name = "ns-505.awsdns-63.com"
+#   }
 
-  name_server {
-    name = "ns-1185.awsdns-20.org"
-  }
-}
+#   name_server {
+#     name = "ns-1185.awsdns-20.org"
+#   }
+# }
 
 # resource "aws_route53_zone" "dev" {
 #   name = "${var.subdomain}.${var.domain}"

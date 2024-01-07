@@ -17,6 +17,11 @@ on:
       AWS_SECRET_ACCESS_KEY_ID:
         required: true
   workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Test scenario tags'
+        required: true
+        type: string
   issues:
     type:
       -opened
@@ -43,7 +48,7 @@ jobs:
 
     - name: Run Terraform
       run: |
-        ls -la
+        echo teste ${{ inputs.tags }}
         cd aws/ec2_instance
         terraform init
         terraform apply -auto-approve -var="intance_name=${{ inputs.intance_name }}" -var="subdomain=${{ inputs.subdomain }}" 

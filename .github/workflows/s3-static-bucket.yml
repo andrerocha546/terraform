@@ -67,7 +67,7 @@ jobs:
     - name: Download Terraform Files from Workspace
       uses: actions/download-artifact@v4
       with:
-        name: my-artifact
+        name: terraform-files
         path: aws/s3_bucket/
 
     - name: Run Terraform Destroy

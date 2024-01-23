@@ -1,4 +1,4 @@
-name: 'Terraform'
+name: 'S3 Bucket'
 
 on:
   issues:
@@ -36,3 +36,10 @@ jobs:
         cd aws/s3_bucket
         terraform init
         terraform apply -auto-approve -var="bucket_name=${{ env.BUCKET_NAME }}"
+    
+    - name: Save Terraform Files to Workspace
+      uses: actions/upload-artifact@v2
+      with:
+        name: terraform-files
+        path: aws/s3_bucket/
+

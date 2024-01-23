@@ -6,8 +6,8 @@ on:
       -opened
 
 jobs:
-  terraform:
-    name: 'Terraform'
+  terraform_apply:
+    name: 'Terraform Apply'
     runs-on: ubuntu-latest
 
     defaults:
@@ -43,3 +43,32 @@ jobs:
         name: terraform-files
         path: aws/s3_bucket/
 
+  terraform_destroy:
+    name: 'Terraform Destroy'
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup AWS CLI
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
+        aws-region:  ${{ secrets.AWS_REGION }}
+
+    - name: Download Terraform Files from Workspace
+    - uses: actions/download-artifact@v4
+      with:
+        name: my-artifact
+        path: aws/s3_bucket/
+
+    - name: Run Terraform Destroy
+      run: |
+        cd aws/s3_bucket/
+        terraform destroy -auto-approve

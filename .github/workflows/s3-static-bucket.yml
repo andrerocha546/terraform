@@ -32,6 +32,12 @@ jobs:
         echo "Bucket Name: $BUCKET_NAME"
         echo "BUCKET_NAME=$BUCKET_NAME" >> $GITHUB_ENV
 
+    - name: Extract Run Id
+      run: |
+        export RUN_ID=$(echo "${{ github.run_id }}")
+        echo "Run Id: $RUN_ID"
+        echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
+
     - name: Run Terraform
       run: |
         cd aws/s3_bucket
@@ -75,6 +81,7 @@ jobs:
       with:
         name: terraform-files-${{ env.BUCKET_NAME }}
         path: aws/s3_bucket/
+        run-id: ${{ env.RUN_ID }}
     - run: ls -R aws/s3_bucket/
 
     - name: Run Terraform Destroy

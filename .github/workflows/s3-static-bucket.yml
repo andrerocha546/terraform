@@ -64,7 +64,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
-        aws-region:  ${{ secrets.AWS_REGION }}
+        aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Extract Bucket Name from Issue
       run: |
@@ -72,13 +72,15 @@ jobs:
         echo "Bucket Name: $BUCKET_NAME"
         echo "BUCKET_NAME=$BUCKET_NAME" >> $GITHUB_ENV
 
-    - name: Download Terraform Files from Workspace
-      uses: actions/download-artifact@v4
+    - name: Download Terraform Files from S3
+      uses: keithweaver/aws-s3-github-action@v1.0.0
       with:
-        name: terraform-files-${{ env.BUCKET_NAME }}
-        path: aws/s3_bucket/
-        run-id: ${{ env.RUN_ID }}
-    - run: ls -R aws/s3_bucket/
+        command: cp
+        source: *
+        destination: aws/s3_bucket/
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
+        aws_region: ${{ secrets.AWS_REGION }}
 
     - name: Run Terraform Destroy
       run: |

@@ -32,23 +32,19 @@ jobs:
         echo "Bucket Name: $BUCKET_NAME"
         echo "BUCKET_NAME=$BUCKET_NAME" >> $GITHUB_ENV
 
-    - name: Extract Run Id
-      run: |
-        export RUN_ID=$(echo "${{ github.run_id }}")
-        echo "Run Id: $RUN_ID"
-        echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
-
     - name: Run Terraform
       run: |
         cd aws/s3_bucket
         terraform init
         terraform apply -auto-approve -var="bucket_name=${{ env.BUCKET_NAME }}"
     
-    - name: Save Terraform Files to Workspace
-      uses: actions/upload-artifact@v4
+    - name: Save Terraform Files to S3
+      uses: shallwefootball/s3-upload-action@master
       with:
-        name: terraform-files-${{ env.BUCKET_NAME }}
-        path: aws/s3_bucket/
+        aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID}}
+        aws_bucket: ${{ env.BUCKET_NAME }}
+        source_dir: aws/s3_bucket/
 
   terraform_destroy:
     if: ${{ github.event.label.name == 'bug' }}

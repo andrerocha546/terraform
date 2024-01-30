@@ -81,6 +81,7 @@ jobs:
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
         aws_region: ${{ secrets.AWS_REGION }}
+      run: ls -la aws/s3_bucket/
 
     - name: Run Terraform Destroy
       run: |

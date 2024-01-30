@@ -39,13 +39,12 @@ jobs:
         terraform apply -auto-approve -var="bucket_name=${{ env.BUCKET_NAME }}"
     
     - name: Save Terraform Files to Workspace
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: terraform-files
         path: aws/s3_bucket/
 
   terraform_destroy:
-    needs: terraform_apply
     if: ${{ github.event.label.name == 'bug' }}
     name: 'Terraform Destroy'
     runs-on: ubuntu-latest

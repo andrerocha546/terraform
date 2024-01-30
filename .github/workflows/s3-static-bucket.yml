@@ -41,7 +41,7 @@ jobs:
     - name: Save Terraform Files to Workspace
       uses: actions/upload-artifact@v4
       with:
-        name: terraform-files
+        name: terraform-files-${{ env.BUCKET_NAME }}
         path: aws/s3_bucket/
 
   terraform_destroy:
@@ -64,13 +64,18 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ID }}
         aws-region:  ${{ secrets.AWS_REGION }}
 
+    - name: Extract Bucket Name from Issue
+      run: |
+        export BUCKET_NAME=$(echo "${{ github.event.issue.title }}")
+        echo "Bucket Name: $BUCKET_NAME"
+        echo "BUCKET_NAME=$BUCKET_NAME" >> $GITHUB_ENV
+
     - name: Download Terraform Files from Workspace
       uses: actions/download-artifact@v4
       with:
-        pattern: terraform-*
-        path: terraform
-        merge-multiple: true
-    - run: ls -R terraform
+        name: terraform-files-${{ env.BUCKET_NAME }}
+        path: aws/s3_bucket/
+    - run: ls -R aws/s3_bucket/
 
     - name: Run Terraform Destroy
       run: |

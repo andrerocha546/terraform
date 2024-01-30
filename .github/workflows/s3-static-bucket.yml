@@ -45,6 +45,7 @@ jobs:
         path: aws/s3_bucket/
 
   terraform_destroy:
+    needs: terraform_apply
     if: ${{ github.event.label.name == 'bug' }}
     name: 'Terraform Destroy'
     runs-on: ubuntu-latest
